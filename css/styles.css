@@ -9,3 +9,8 @@ html, body {
     margin-bottom: 100px;
     margin-top: 50px;
 }
+
+.footer {
+    width: 75%;
+    margin: auto;
+}
