@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Antibaterial Visualizations</title>
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/styles.css">
+
+    <script src="./js/app.js"></script>
+</head>
+<body>
+    <div class="box">
+        <div id="persona">
+            <h2>Persona</h2>
+
+            <p>Emery Gregg, age 46</p>
+
+            <p>Emery is a pharmaceutical researcher. His job is to create new drugs and medications to help people. The company wants
+                to make a profit, but for Emery it isn't about the money it is about helping people. As such he makes proposals based
+                solely on how effective he thinks a drug will be. Whether his proposals are funded past initial exploratory research or
+                not us up to the company and out of his hands.</p>
+
+            <p>Emery wants to know more about anti-bacterial drugs and their effects on various types of bacteria. He is lookaing at
+                this dataset as part of his exploratory research on the subject.</p>
+        </div>
+        <div id="vis1">
+            <h2>Visualization 1</h2>
+            <p class="question">Which drug tends to be, on average, the most effective at stopping bacterial growth and
+                what is the effect of gram stainability on each drug's growth prevention?</p>
+            <div id="vis1-plotly"></div>
+        </div>
+        <div id="vis2">
+            <h2>Visualization 2</h2>
+            <p class="question">Which bacteria are most resistant to drugs?</p>
+            <div id="vis2-plotly"></div>
+        </div>
+        <div id="vis3">
+            <h2>Visualization 3</h2>
+            <p class="question">Which drugs are most effective against a given bacteria?</p>
+            <div id="vis3-plotly"></div>
+        </div>
+    </div>
+</body>
+</html>
