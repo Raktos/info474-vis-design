@@ -1,8 +1,10 @@
 "use strict";
 
 $(document).ready(function() {
+    // load the data and build the graphs when finished
     getData(buildGraphs);
-    
+
+    // gets the raw data from the server and calls the callback when finished
     function getData(callback) {
         $.get('./data/antibiotics_data.csv')
             .done(function(data) {
@@ -13,20 +15,28 @@ $(document).ready(function() {
             });
     }
 
+    // builds the graphs
     function buildGraphs(data) {
+        // format the data as a js object
         var formattedData = formatData(data);
 
+        // build the three graphs
         buildGramBoxplot(formattedData, 'vis1-plotly');
         buildBacteriaBoxplot(formattedData, 'vis2-plotly');
         buildBarGraph(formattedData, 'vis3-plotly');
     }
 
+    // build a grouped boxplot
     function buildGramBoxplot(data, div) {
         // reformat the data for group box plots
+        // groups are by positive gram, negative gram, and the combined totals
+        // x holds 'tags' for each item in positive, negative, and total to tell
+        // plotly which drug each data point belongs to
         var drugs = ['Neomycin', 'Penicilin', 'Streptomycin'];
         var formattedData = {positive: [], negative: [], total: []};
         var x = {positive: [], negative: [], total: []};
 
+        // does the actual sorting from the basic js object
         for (var i = 0; i < drugs.length; i++) {
             for (var j = 0; j < data[drugs[i]].length; j++) {
                 formattedData[data['GramStaining'][j]].push(data[drugs[i]][j]);
@@ -93,11 +103,14 @@ $(document).ready(function() {
         Plotly.newPlot(div, traces, layout);
     }
 
+    // build the bacteria resistance boxplot
     function buildBacteriaBoxplot(data, div) {
         var i;
         var traces = [];
         var drugs = ['Neomycin', 'Penicilin', 'Streptomycin'];
 
+        // not going to group data this time, just a seperate trace for each bacteria
+        // this sorts the data out by bacteria and puts them in a traces array
         for (i = 0; i < data['Bacteria'].length; i++) {
             var bacteria = {};
             bacteria.name = data['Bacteria'][i];
@@ -138,19 +151,25 @@ $(document).ready(function() {
             showlegend: false
         };
 
+        // sort the traces into order by median value
         traces = traces.sort(sortTracesByMedian);
 
+        // set the display order to the order in the array
         for (i = 1; i < traces.length; i++) {
             traces[i].x = i;
         }
 
+        // plot
         Plotly.newPlot(div, traces, layout);
     }
 
+    // build bar bacterial resistance bar graphs 
     function buildBarGraph(data, div) {
         var drugs = ['Neomycin', 'Penicilin', 'Streptomycin'];
         var traces = [];
-
+        
+        // This one uses basically the raw js object
+        // group are by drug (each drug column) and are 'tagged' by bacteria (the Bacteria column, same order)
         for (var i = 0; i < drugs.length; i++) {
             var trace = {
                 y: data[drugs[i]],
@@ -192,6 +211,7 @@ $(document).ready(function() {
         Plotly.newPlot(div, traces, layout);
     }
 
+    // format the raw csv into the raw js object
     function formatData(data) {
         var formattedData = {};
 
@@ -208,7 +228,7 @@ $(document).ready(function() {
         return formattedData;
     }
 
-    // sort traces by median value
+    // helper to sort traces by median value
     function sortTracesByMedian(a,b) {
         var aMid = a.y.length / 2;
         if (a.y.length % 2 != 0) {

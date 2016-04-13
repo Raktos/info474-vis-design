@@ -6,8 +6,6 @@ html, body {
 .box {
     width: 75%;
     margin: auto;
-}
-
-#vis1-plotly {
-    width: 90%;
+    margin-bottom: 100px;
+    margin-top: 50px;
 }
